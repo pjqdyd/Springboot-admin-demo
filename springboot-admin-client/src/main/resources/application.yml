@@ -1,0 +1,33 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: springboot-admin-client
+  #客户端的spring security配置
+  security:
+    user:
+      name: client
+      password: 123456
+  boot:
+    admin:
+      client:
+        #注册到服务端
+        url: http://localhost:9999
+        #服务端使用了spring security后,客户端统一也需要配置帐户名和密码信息与服务端一致
+        username: admin
+        password: 123456
+        instance:
+          metadata:
+            user.name: ${spring.security.user.name}
+            user.password: ${spring.security.user.password}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        #暴露所有的actuator监控节点的信息
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
